@@ -4,7 +4,8 @@
  *                                                                                *
  * ISC License (ISC)                                                              *
  *                                                                                *
- * Copyright 2018 Lucas Brasilino <lucas.brasilino@gmail.com>                     *
+ * Copyright 2018 Lucas Brasilino <lucas.brasilino@gmail.com>
+ * Modified by QSY。                                                              *
  *                                                                                *
  * Refer to LICENSE file.                                                         *
  **********************************************************************************/
@@ -40,6 +41,16 @@ module net2axis_tb;
     wire  [TDATA_WIDTH-1 : 0]       M_SBUS_TDATA;
     wire  [(TDATA_WIDTH/8)-1 : 0]   M_SBUS_TKEEP;
     wire          [7 : 0]           M_SBUS_CTL;
+
+    wire                            S_SBUS_5_VALID;
+    wire  [TDATA_WIDTH-1 : 0]       S_SBUS_5_TDATA;
+    wire  [(TDATA_WIDTH/8)-1 : 0]   S_SBUS_5_TKEEP;
+    wire          [7 : 0]           S_SBUS_5_CTL;
+
+    wire                            M_SBUS_5_VALID;
+    wire  [TDATA_WIDTH-1 : 0]       M_SBUS_5_TDATA;
+    wire  [(TDATA_WIDTH/8)-1 : 0]   M_SBUS_5_TKEEP;
+    wire          [7 : 0]           M_SBUS_5_CTL;
 
     initial begin
         $timeformat(-9, 2, " ns", 20);
@@ -111,10 +122,27 @@ module net2axis_tb;
         .S_AXIS_TLAST     (M_AXIS_TLAST    ),
         .S_AXIS_TREADY    (M_AXIS_TREADY   ),
 
-        .M_SBUS_VALID     (),
-        .M_SBUS_TDATA     (),
-        .M_SBUS_TKEEP     (),
-        .M_SBUS_CTL       ()
+        .M_SBUS_VALID     (S_SBUS_5_VALID),
+        .M_SBUS_TDATA     (S_SBUS_5_TDATA),
+        .M_SBUS_TKEEP     (S_SBUS_5_TKEEP),
+        .M_SBUS_CTL       (S_SBUS_5_CTL)
+        );
+
+
+
+    dflow dflow_inst (
+        .ACLK             (ACLK            ),
+        .ARESETN          (ARESETN         ),
+
+        .S_SBUS_VALID     (S_SBUS_5_VALID),
+        .S_SBUS_TDATA     (S_SBUS_5_TDATA),
+        .S_SBUS_TKEEP     (S_SBUS_5_TKEEP),
+        .S_SBUS_CTL       (S_SBUS_5_CTL),
+
+        .M_SBUS_VALID(),
+        .M_SBUS_TDATA(),
+        .M_SBUS_TKEEP(),
+        .M_SBUS_CTL() 
         );
 
 endmodule
