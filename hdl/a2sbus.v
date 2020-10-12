@@ -23,7 +23,7 @@ module a2sbus #(
         output reg                             M_SBUS_VALID,
         output reg      [TDATA_WIDTH-1 : 0]    M_SBUS_TDATA,
         output reg  [(TDATA_WIDTH/8)-1 : 0]    M_SBUS_TKEEP,
-        output reg                  [7 : 0]    M_SBUS_CTL //普通数据包FF开头，测量数据包FE开头，每一级都递减1，包结尾用01，
+        output reg                  [7 : 0]    M_SBUS_CTL //普通数据包FF开头，每一级都递减1，包结尾用01，
         );
 
     reg                             [7 : 0]    CTL_counter;
